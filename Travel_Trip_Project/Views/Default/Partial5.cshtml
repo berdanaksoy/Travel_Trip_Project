@@ -1,0 +1,15 @@
+﻿@using Travel_Trip_Project.Models.Classes
+@model List<blog>
+
+<div class="box1-left">
+    @foreach (var item in Model)
+    {
+        <div class="bot-img">
+            <img src="@item.blogImage" alt="" />
+        </div>
+        <div class="bot-desc1">
+            <p>@item.description.Substring(0,150)...</p>
+        </div>
+        <div class="clear"></div>
+    }
+</div>

@@ -14,8 +14,8 @@ namespace Travel_Trip_Project.Controllers
         blogComment bc = new blogComment();
         public ActionResult Index()
         {
-            bc.value1 = c.blogs.OrderByDescending(x=>x.date).ToList();
-            bc.value3=c.blogs.OrderByDescending(x=>x.date).Take(3).ToList();
+            bc.value1 = c.blogs.OrderByDescending(x => x.date).ToList();
+            bc.value3 = c.blogs.OrderByDescending(x => x.date).Take(3).ToList();
 
             return View(bc);
         }
@@ -26,6 +26,23 @@ namespace Travel_Trip_Project.Controllers
             bc.value2 = c.comments.Where(y => y.blogId == id).ToList();
 
             return View(bc);
+        }
+
+        [HttpGet]
+        public PartialViewResult AddComment(int id)
+        {
+            ViewBag.blogId = id;
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public PartialViewResult AddComment(comments co)
+        {
+            c.comments.Add(co);
+            c.SaveChanges();
+
+            return PartialView();
         }
     }
 }

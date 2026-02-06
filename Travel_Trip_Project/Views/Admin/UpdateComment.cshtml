@@ -1,0 +1,25 @@
+﻿@model Travel_Trip_Project.Models.Classes.comments
+
+@{
+    ViewBag.Title = "UpdateComment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yorum Güncelleme</h2>
+<br />
+@using (Html.BeginForm("UpdateComment", "Admin", FormMethod.Post))
+{
+    @Html.LabelFor(x => x.id)
+    @Html.TextBoxFor(x => x.id, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    @Html.LabelFor(x => x.user)
+    @Html.TextBoxFor(x => x.user, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.mail)
+    @Html.TextBoxFor(x => x.mail, new { @class = "form-control" })
+    <br />
+    @Html.LabelFor(x => x.comment)
+    @Html.TextAreaFor(x => x.comment,10,1, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-success">Yorumu Güncelle</button>
+}
