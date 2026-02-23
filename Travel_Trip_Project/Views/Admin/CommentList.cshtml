@@ -6,28 +6,64 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<br />
 <h2>Yorum Listesi</h2>
 
+<br />
 <table class="table table-bordered">
     <tr>
-        <th>Id</th>
         <th>Kullanıcı</th>
         <th>Mail</th>
-        <th>Comment</th>
+        <th>Yorum</th>
         <th>Blog</th>
         <th>Sil</th>
-        <th>Güncelle</th>
+        <th>Detay</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.id</td>
             <td>@item.user</td>
             <td>@item.mail</td>
             <td>@item.comment</td>
             <td>@item.Blog.title</td>
             <td><a href="/Admin/DeleteComment/@item.id" class="btn btn-danger">Sil</a></td>
-            <td><a href="/Admin/UpdateComment/@item.id" class="btn btn-warning">Güncelle</a></td>
+            <td><a href="/Admin/CommentDetails/@item.id" class="btn btn-warning">Detay</a></td>
         </tr>
     }
 </table>
+<br />
+<div style="margin-top: 15px;">
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a href="/Admin/CommentList?page=@(ViewBag.CurrentPage - 1)"
+           class="btn btn-default btn-sm">« Önceki</a>
+    }
+    else
+    {
+        <button class="btn btn-default btn-sm" disabled>« Önceki</button>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (i == ViewBag.CurrentPage)
+        {
+            <a href="/Admin/CommentList?page=@i"
+               class="btn btn-primary btn-sm">@i</a>
+        }
+        else
+        {
+            <a href="/Admin/CommentList?page=@i"
+               class="btn btn-default btn-sm">@i</a>
+        }
+    }
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a href="/Admin/CommentList?page=@(ViewBag.CurrentPage + 1)"
+           class="btn btn-default btn-sm">Sonraki »</a>
+    }
+    else
+    {
+        <button class="btn btn-default btn-sm" disabled>Sonraki »</button>
+    }
+</div>

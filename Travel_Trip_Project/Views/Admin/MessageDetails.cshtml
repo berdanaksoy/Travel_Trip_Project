@@ -1,0 +1,47 @@
+﻿@model Travel_Trip_Project.Models.Classes.contact
+
+@{
+    ViewBag.Title = "MessageDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h2>Mesaj Detayı</h2>
+
+<br />
+<div class="form-group">
+    <label>ID :</label>
+    <input type="text" value="@Model.id" readonly class="form-control" />
+</div>
+
+<br />
+<div class="form-group">
+    <label>Ad Soyad :</label>
+    <input type="text" value="@Model.fullname" readonly class="form-control" />
+</div>
+
+<br />
+<div class="form-group">
+    <label>Mail :</label>
+    <input type="text" value="@Model.mail" readonly class="form-control" />
+</div>
+
+<br />
+<div class="form-group">
+    <label>Telefon Numarası :</label>
+    <input type="text" value="@Model.phone_number" readonly class="form-control" />
+</div>
+
+<br />
+<div class="form-group">
+    <label>Mesaj :</label>
+    <textarea readonly class="form-control" rows="10">@Model.message</textarea>
+</div>
+
+<br />
+<a href="/Admin/DeleteMessage/@Model.id"
+   class="btn btn-danger"
+   onclick="return confirm('Bu mesajı silmek istediğinizden emin misiniz?')">
+    Sil
+</a>
+<br />

@@ -5,24 +5,25 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<br />
 <h2>Blog Güncelleme</h2>
 <br />
 @using (Html.BeginForm("UpdateBlog", "Admin", FormMethod.Post))
 {
-    @Html.LabelFor(x => x.id)
-    @Html.TextBoxFor(x => x.id, new { @class = "form-control", @readonly="readonly" })
+    <label>ID :</label>
+    @Html.TextBoxFor(x => x.id, new { @class = "form-control", @readonly = "readonly" })
     <br />
-    @Html.LabelFor(x => x.title)
+    <label>Başlık :</label>
     @Html.TextBoxFor(x => x.title, new { @class = "form-control" })
     <br />
-    @Html.LabelFor(x => x.date)
+    <label>Tarih :</label>
     @Html.TextBoxFor(x => x.date, new { @class = "form-control" })
     <br />
-    @Html.LabelFor(x => x.blogImage)
+    <label>Resim URL :</label>
     @Html.TextBoxFor(x => x.blogImage, new { @class = "form-control" })
     <br />
-    @Html.LabelFor(x => x.description)
-    @Html.TextAreaFor(x => x.description,15,1, new { @class = "form-control" })
+    <label>Açıklama :</label>
+    @Html.TextAreaFor(x => x.description, 15, 1, new { @class = "form-control" })
     <br />
     <button class="btn btn-success">Bloğu Güncelle</button>
 }

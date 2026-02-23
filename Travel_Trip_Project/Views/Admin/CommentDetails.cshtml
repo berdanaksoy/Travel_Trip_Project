@@ -1,0 +1,26 @@
+﻿@model Travel_Trip_Project.Models.Classes.comments
+
+@{
+    ViewBag.Title = "UpdateComment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h2>Yorum Detay</h2>
+<br />
+@using (Html.BeginForm("DeleteComment", "Admin", FormMethod.Post))
+{
+    <label>ID :</label>
+    @Html.TextBoxFor(x => x.id, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    <label>Kullanıcı :</label>
+    @Html.TextBoxFor(x => x.user, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    <label>Mail :</label>
+    @Html.TextBoxFor(x => x.mail, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    <label>Yorum :</label>
+    @Html.TextAreaFor(x => x.comment, 10, 1, new { @class = "form-control", @readonly = "readonly" })
+    <br />
+    <button class="btn btn-danger">Yorumu Sil</button>
+}

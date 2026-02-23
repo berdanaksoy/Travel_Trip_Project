@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Travel_Trip_Project.Models.Classes.contact>
+
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<br />
+<h2>Gelen Mesajlar</h2>
+
+<br />
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark" style="background-color:#2e7d32; color:white;">
+        <tr>
+            <th>Ad Soyad</th>
+            <th>E-Mail</th>
+            <th>Telefon</th>
+            <th>Mesaj Özeti</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.fullname</td>
+                <td>@item.mail</td>
+                <td>@item.phone_number</td>
+                <td>
+                    @(item.message != null && item.message.Length > 60
+                        ? item.message.Substring(0, 60) + "..."
+                        : item.message)
+                </td>
+                <td>
+                    <a href="/Admin/MessageDetails/@item.id"
+                       class="btn btn-sm btn-primary">
+                        Görüntüle
+                    </a>
+                    <a href="/Admin/DeleteMessage/@item.id"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Bu mesajı silmek istediğinizden emin misiniz?')">
+                        Sil
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<div style="margin-top: 15px;">
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a href="/Admin/Messages?page=@(ViewBag.CurrentPage - 1)"
+           class="btn btn-default btn-sm">« Önceki</a>
+    }
+    else
+    {
+        <button class="btn btn-default btn-sm" disabled>« Önceki</button>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (i == ViewBag.CurrentPage)
+        {
+            <a href="/Admin/Messages?page=@i"
+               class="btn btn-primary btn-sm">@i</a>
+        }
+        else
+        {
+            <a href="/Admin/Messages?page=@i"
+               class="btn btn-default btn-sm">@i</a>
+        }
+    }
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a href="/Admin/Messages?page=@(ViewBag.CurrentPage + 1)"
+           class="btn btn-default btn-sm">Sonraki »</a>
+    }
+    else
+    {
+        <button class="btn btn-default btn-sm" disabled>Sonraki »</button>
+    }
+</div>

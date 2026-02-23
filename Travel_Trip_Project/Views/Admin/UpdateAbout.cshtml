@@ -1,0 +1,43 @@
+﻿@model Travel_Trip_Project.Models.Classes.about
+
+@{
+    ViewBag.Title = "UpdateAbout";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br />
+<h2>Hakkımızda Güncelleme</h2>
+
+<br />
+@using (Html.BeginForm("UpdateAbout", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>ID :</label>
+        @Html.TextBoxFor(m => m.id, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label>Fotoğraf URL :</label>
+        @Html.TextBoxFor(m => m.photoURL, new { @class = "form-control" })
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label>Açıklama :</label>
+        @Html.TextAreaFor(m => m.description, new { @class = "form-control", rows = "10" })
+    </div>
+    <br />
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+}
+
+@if (TempData["Success"] != null)
+{
+    <br />
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}

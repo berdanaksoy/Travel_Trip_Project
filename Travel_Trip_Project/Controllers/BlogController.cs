@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,9 +13,10 @@ namespace Travel_Trip_Project.Controllers
         // GET: Blog
         Context c = new Context();
         blogComment bc = new blogComment();
-        public ActionResult Index()
+        public ActionResult Index(int page=1)
         {
-            bc.value1 = c.blogs.OrderByDescending(x => x.date).ToList();
+            bc.value1 = c.blogs.OrderByDescending(x => x.date).ToPagedList(page, 3);
+            bc.value2 = c.comments.OrderByDescending(x => x.date).Take(3).ToList();
             bc.value3 = c.blogs.OrderByDescending(x => x.date).Take(3).ToList();
 
             return View(bc);
@@ -22,8 +24,10 @@ namespace Travel_Trip_Project.Controllers
 
         public ActionResult BlogDetails(int id)
         {
-            bc.value1 = c.blogs.Where(x => x.id == id).ToList();
-            bc.value2 = c.comments.Where(y => y.blogId == id).ToList();
+            bc.value1 = c.blogs.Where(x => x.id == id).OrderByDescending(x=>x.id).ToPagedList(1, 3);
+            bc.value2 = c.comments.Where(y => y.blogId == id).OrderByDescending(x => x.date).ToList();
+            bc.value3 = c.blogs.OrderByDescending(x => x.date).Take(3).ToList();
+            bc.value4 = c.comments.OrderByDescending(x => x.date).Take(3).ToList();
 
             return View(bc);
         }
@@ -37,12 +41,13 @@ namespace Travel_Trip_Project.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult AddComment(comments co)
+        public ActionResult SendComment(comments co)
         {
+            co.date = DateTime.Now;
             c.comments.Add(co);
             c.SaveChanges();
 
-            return PartialView();
+            return RedirectToAction("BlogDetails", new { id = co.blogId });
         }
     }
 }

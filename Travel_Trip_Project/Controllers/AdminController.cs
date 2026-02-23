@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Travel_Trip_Project.Models.Classes;
 
 namespace Travel_Trip_Project.Controllers
@@ -12,9 +13,22 @@ namespace Travel_Trip_Project.Controllers
         // GET: Admin
         Context c = new Context();
         [Authorize]
-        public ActionResult Index()
+        [Authorize]
+        public ActionResult Index(int page = 1)
         {
-            var values = c.blogs.ToList();
+            int pageSize = 10;
+
+            var values = c.blogs
+                          .OrderByDescending(x => x.id)
+                          .Skip((page - 1) * pageSize)
+                          .Take(pageSize)
+                          .ToList();
+
+            int totalRecords = c.blogs.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
 
             return View(values);
         }
@@ -64,11 +78,23 @@ namespace Travel_Trip_Project.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult CommentList()
+        public ActionResult CommentList(int page=1)
         {
-            var comments = c.comments.ToList();
+           int pageSize = 10;
 
-            return View(comments);
+            var values = c.comments
+                          .OrderByDescending(x => x.id)
+                          .Skip((page - 1) * pageSize)
+                          .Take(pageSize)
+                          .ToList();
+
+            int totalRecords = c.comments.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(values);
         }
 
         public ActionResult DeleteComment(int id)
@@ -80,24 +106,65 @@ namespace Travel_Trip_Project.Controllers
             return RedirectToAction("CommentList");
         }
 
-        [HttpGet]
-        public ActionResult UpdateComment(int id)
+        public ActionResult CommentDetails(int id)
         {
             var comment = c.comments.Find(id);
 
-            return View("UpdateComment", comment);
+            return View("CommentDetails", comment);
+        }
+
+        public ActionResult Messages(int page=1)
+        {
+            int pageSize = 10;
+
+            var values = c.contacts
+                          .OrderBy(x => x.id)
+                          .Skip((page - 1) * pageSize)
+                          .Take(pageSize)
+                          .ToList();
+
+            int totalRecords = c.contacts.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(values);
+        }
+
+        public ActionResult MessageDetails(int id)
+        {
+            var contact = c.contacts.Find(id);
+
+            return View(contact);
+        }
+
+        public ActionResult DeleteMessage(int id)
+        {
+            var contact = c.contacts.Find(id);
+            c.contacts.Remove(contact);
+            c.SaveChanges();
+
+            return RedirectToAction("Messages");
+        }
+
+        public ActionResult UpdateAbout()
+        {
+            var about = c.abouts.FirstOrDefault();
+
+            return View(about);
         }
 
         [HttpPost]
-        public ActionResult UpdateComment(comments p)
+        public ActionResult UpdateAbout(about about)
         {
-            var comment = c.comments.Find(p.id);
-            comment.user = p.user;
-            comment.mail = p.mail;
-            comment.comment = p.comment;
+            var value = c.abouts.Find(about.id);
+            value.photoURL = about.photoURL;
+            value.description = about.description;
             c.SaveChanges();
+            TempData["Success"] = "Başarıyla kaydedildi.";
 
-            return RedirectToAction("CommentList");
+            return View();
         }
     }
 }

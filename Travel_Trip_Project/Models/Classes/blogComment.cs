@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,9 @@ namespace Travel_Trip_Project.Models.Classes
 {
     public class blogComment
     {
-        public IEnumerable<blog> value1 { get; set; }
+        public IPagedList<blog> value1 { get; set; }
         public IEnumerable<comments> value2 { get; set; }
         public IEnumerable<blog> value3 { get; set; }
+        public IEnumerable<comments> value4 { get; set; }
     }
 }

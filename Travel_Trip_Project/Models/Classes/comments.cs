@@ -15,5 +15,6 @@ namespace Travel_Trip_Project.Models.Classes
         public string comment { get; set; }
         public int blogId { get; set; }
         public virtual blog Blog { get; set; }
+        public DateTime date { get; set; }
     }
 }

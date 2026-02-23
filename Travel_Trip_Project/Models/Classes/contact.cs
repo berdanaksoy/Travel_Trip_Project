@@ -12,7 +12,7 @@ namespace Travel_Trip_Project.Models.Classes
         public int id { get; set; }
         public string fullname { get; set; }
         public string mail { get; set; }
-        public string subject { get; set; }
+        public string phone_number { get; set; }
         public string message { get; set; }
     }
 }

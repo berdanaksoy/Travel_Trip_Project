@@ -23,6 +23,11 @@ namespace Travel_Trip_Project.Controllers
             return View();
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
         public PartialViewResult Partial1()
         {
             var values = c.blogs.OrderByDescending(x => x.date).Take(2).ToList();

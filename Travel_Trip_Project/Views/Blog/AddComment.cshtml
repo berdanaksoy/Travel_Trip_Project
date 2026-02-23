@@ -1,10 +1,13 @@
 ﻿<div class="content-form">
     <h3>Yorum Yapın</h3>
-    <form method="post">
-        <input type="text" placeholder="Id" name="blogId" value="@ViewBag.blogId" required />
+
+    <form action="/Blog/SendComment" method="post">
+        <input type="hidden" name="blogId" value="@ViewBag.blogId" />
+
         <input type="text" placeholder="Kullanici Adı" name="user" required />
         <input type="text" placeholder="Mail Adresi" name="mail" required />
         <textarea placeholder="Yorum" name="comment" required></textarea>
+
         <input type="submit" value="Gönder" />
     </form>
 </div>
